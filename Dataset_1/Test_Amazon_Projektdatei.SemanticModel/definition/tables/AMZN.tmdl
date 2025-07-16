@@ -1,0 +1,85 @@
+table AMZN
+	lineageTag: 879e054d-5430-46f2-a0d4-5c6f033f8342
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 793b780a-fa9b-443c-a2a3-b6c5821ac224
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 7f2a2e9c-6512-4d14-97ef-4fb54f92116d
+			defaultHierarchy: LocalDateTable_fa9bcf89-7d77-4769-821f-1cb320bf43df.Datumshierarchie
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Open
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ae8c113-581f-48eb-aa25-1ab77e4d51f4
+		summarizeBy: sum
+		sourceColumn: Open
+
+		annotation SummarizationSetBy = Automatic
+
+	column High
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d68a65a-8814-4743-b7e4-5064a13d65c0
+		summarizeBy: sum
+		sourceColumn: High
+
+		annotation SummarizationSetBy = Automatic
+
+	column Low
+		dataType: int64
+		formatString: 0
+		lineageTag: a5c46d67-beb3-414b-b5d5-d8fbc62ded06
+		summarizeBy: sum
+		sourceColumn: Low
+
+		annotation SummarizationSetBy = Automatic
+
+	column Close
+		dataType: int64
+		formatString: 0
+		lineageTag: c2db254b-9b3c-411b-91e9-db64caa7b8fe
+		summarizeBy: sum
+		sourceColumn: Close
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Adj Close'
+		dataType: int64
+		formatString: 0
+		lineageTag: 04ed8d64-2843-42ab-ae78-a444354e9bd6
+		summarizeBy: sum
+		sourceColumn: Adj Close
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: int64
+		formatString: 0
+		lineageTag: 8dadca34-6cc1-4d2a-928c-375b57f8f5db
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AMZN = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents("C:\Softwareentwicklung\github\PBI_CICD\AMZN.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Erste Zeile als Überschriften verwenden" = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),
+				    #"Typ ändern" = Table.TransformColumnTypes(#"Erste Zeile als Überschriften verwenden",{{"Date", type date}, {"Open", Int64.Type}, {"High", Int64.Type}, {"Low", Int64.Type}, {"Close", Int64.Type}, {"Adj Close", Int64.Type}, {"Volume", Int64.Type}})
+				in
+				    #"Typ ändern"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Test_Amazon_Projektdatei"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "be45d8ff-63fb-a8b0-4499-e10e64687200"
+  }
+}
